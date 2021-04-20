@@ -1,0 +1,305 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="initial-scale=1,user-scalable=no,maximum-scale=1,width=device-width">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <link rel="stylesheet" href="css/leaflet.css">
+    <link rel="stylesheet" href="css/qgis2web.css">
+    <link rel="stylesheet" href="css/fontawesome-all.min.css">
+    <link rel="stylesheet" href="css/leaflet-search.css">
+    <link rel="stylesheet" href="css/easy-button.css">
+    <link rel="stylesheet" href="/css/leaflet-sidebar.css" />
+    <style>
+        html,
+        body {
+            height: 100%;
+            font: 10pt "Helvetica Neue", Arial, Helvetica, sans-serif;
+        }
+
+        #map {
+            height: 98%;
+        }
+
+        .lorem {
+            font-style: italic;
+            color: #AAA;
+        }
+
+        .legend {
+            line-height: 18px;
+            color: #555;
+        }
+
+        .legend i {
+            width: 16px;
+            height: 16px;
+            float: left;
+            margin-right: 8px;
+            opacity: 0.7;
+        }
+
+        .legend header {
+            text-align: center;
+            font-size: 16px;
+            margin: 2px 12px 8px;
+            color: #777;
+        }
+
+        .info {
+            padding: 6px 8px;
+            font: 14px/16px Arial, Helvetica, sans-serif;
+            background: white;
+            background: rgba(255, 255, 255, 0.8);
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+            border-radius: 5px;
+        }
+
+        .info h4 {
+            margin: 0 0 5px;
+            color: #777;
+        }
+    </style>
+    <title></title>
+</head>
+
+<!-- SideBar FROM HERE -->
+
+<body>
+    <!-- optionally define the sidebar content via HTML markup -->
+    <div id="sidebar" class="leaflet-sidebar collapsed">
+
+        <!-- nav tabs -->
+        <div class="leaflet-sidebar-tabs">
+            <!-- top aligned tabs -->
+            <ul role="tablist">
+                <li><a href="#home" role="tab"><i class="fa fa-bars active"></i></a></li>
+                <li><a href="#filter" role="tab" target="_blank"><img src="images/information_icon.png" width="30" height="30"></i></a></li>
+            </ul>
+
+            <!-- bottom aligned tabs -->
+            <ul role="tablist">
+                <li>
+                    <a href="https://datadashboard.health.gov.il/COVID-19/general">
+                        <img src="/images/covid1.png" width="20" height="20">
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+        <!-- panel content -->
+        <div class="leaflet-sidebar-content">
+            <div class="leaflet-sidebar-pane" id="home">
+                <h1 class="leaflet-sidebar-header">
+                    Project info
+                    <span class="leaflet-sidebar-close">
+                        <i class="fa fa-caret-left">
+                        </i>
+                    </span>
+                </h1>
+                <p style="color:Blue; font-size: 17px; text-align: right;"><strong>מגיש</strong></p>
+                <p style="color:Blue; font-size: 13px; text-align: right;">לירון וקנין 204447882</p>
+                <p style="color:Blue; font-size: 17px; text-align: right;"><strong>מטרת הפרויקט</strong></p>
+                <p style="color:Blue; font-size: 13px; text-align: right;">בעידן הקורונה השתנו הרבה דברים ואנו צריכים להיות חשופים יותר למידע אם זה כמות חולים או מקומות חשיפה לחולי קורונה.</p>
+                <p style="color:Blue; font-size: 13px; text-align: right;">
+                    יצרתי מפת מבודדים פעילים לפי רשויות בגלל הצורך שלדעתי נצרך.
+                    <br><br>
+                    כיום קיים רק מאגר מילולי שיכול לבלבל אך אם משתמשים במפה ניתן לראות באופן ויזואלי, 
+                    <br><br>
+                    דבר המקל על המשתמש.
+                    <br><br>
+                    המטרה הייתה ללמוד את התוכנה ואיך לעבוד דרך אינטגרציה בין המערכות השונות,
+                    <br><br>
+                    ובעזרת פרוייקט זה ניתן לראות בלייב את המידע בעזרת מאגרי נתונים שנטענים מחדש.
+                    <br><br>
+                    מגיש: לירון וקנין 204447882
+                    <br><br>
+                    ניתן להרחיב יותר את הפרוייקט למשל בצירוף נתונים נוספים וכדומה 
+                    <br><br>
+                    https://datadashboard.health.gov.il/COVID-19/general
+                </p>
+            </div>
+
+ 
+
+            <div class="leaflet-sidebar-pane" id="filter">
+                <h1 class="leaflet-sidebar-header">
+                    Covid Status
+                    <span class="leaflet-sidebar-close">
+                        <i class="fa fa-caret-left">
+                        </i>
+                    </span>
+                </h1>
+                
+            
+            </div>
+        </div>
+    </div>
+
+    <!-- SideBar UNTIL HERE -->
+
+    <div id="map"></div>
+    <script src="js/qgis2web_expressions.js"></script>
+    <script src="js/leaflet.js"></script>
+    <script src="js/leaflet.ajax.min.js"></script>
+    <script src="js/leaflet.rotatedMarker.js"></script>
+    <script src="js/leaflet.pattern.js"></script>
+    <script src="js/leaflet-hash.js"></script>
+    <script src="js/Autolinker.min.js"></script>
+    <script src="js/rbush.min.js"></script>
+    <script src="js/labelgun.min.js"></script>
+    <script src="js/labels.js"></script>
+    <script src="js/leaflet-search.js"></script>
+    <script src="js/easy-button.js"></script>
+    <script src="js/leaflet-sidebar.js"></script>
+    <script src="data/Usaver1_1.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/fuse.js/dist/fuse.js"></script>
+
+    <script>
+        var infoCounter=0;
+        var TotalIsolated=0;
+        var map = L.map('map', {
+            zoomControl: true, maxZoom: 28, minZoom: 1
+        }).fitBounds([[34.55168582782351, 41.94587334703223], [28.207560622035196, 28.279142328468787]]);
+        var hash = new L.Hash(map);
+        map.attributionControl.setPrefix('<a href="https://github.com/tomchadwin/qgis2web" target="_blank">qgis2web</a> &middot; <a href="https://leafletjs.com" title="A JS library for interactive maps">Leaflet</a> &middot; <a href="https://qgis.org">QGIS</a>');
+        var autolinker = new Autolinker({ truncate: { length: 30, location: 'smart' } });
+        var bounds_group = new L.featureGroup([]);
+        function setBounds() {
+        }
+        map.createPane('pane_OSMStandard_0');
+        map.getPane('pane_OSMStandard_0').style.zIndex = 400;
+        var layer_OSMStandard_0 = L.tileLayer('http://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            pane: 'pane_OSMStandard_0',
+            opacity: 1.0,
+            attribution: '<a href="https://www.openstreetmap.org/copyright">© OpenStreetMap contributors, CC-BY-SA</a>',
+            minZoom: 1,
+            maxZoom: 28,
+            minNativeZoom: 0,
+            maxNativeZoom: 19
+        });
+        layer_OSMStandard_0;
+        map.addLayer(layer_OSMStandard_0);
+
+
+        var blackMIcon = L.icon({
+            iconUrl: '/covid1.png',
+
+            iconSize:     [18, 18], // size of the icon
+            iconAnchor:   [8, 8], // point of the icon which will correspond to marker's location
+            popupAnchor:  [-3, -4] // point from which the popup should open relative to the iconAnchor
+        });
+        var redMIcon = L.icon({
+            iconUrl: '/covid2.png',
+
+            iconSize:     [25, 25], // size of the icon
+            iconAnchor:   [8, 8], // point of the icon which will correspond to marker's location
+            popupAnchor:  [-3, -8] // point from which the popup should open relative to the iconAnchor
+        });
+        function pop_Isr_saver1_1(feature, layer) {
+            layer.on({
+
+            });
+
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Municipality_desc'] !== null ? 'City: ' + autolinker.link(feature.properties['Municipality_desc'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Isolations'] !== null ? 'Isolations #: ' + autolinker.link(feature.properties['Isolations'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Iso_per_1000'] !== null ? 'Isolations for 1000 citizens: ' + autolinker.link(feature.properties['Iso_per_1000'].toLocaleString())  : ' ') +'</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Total_Pop2017'] !== null ? 'Population: ' + autolinker.link(feature.properties['Total_Pop2017'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+            </table>';
+            //TODO
+            if(feature.properties['Iso_per_1000'] >= 500)
+            {
+                layer.setIcon(redMIcon);
+            }
+            else
+                layer.setIcon(blackMIcon);
+            infoCounter++;
+            TotalIsolated += feature.properties['Isolations'];
+            layer.bindPopup(popupContent, { maxHeight: 400 });
+            layer.getPopup().on('remove', function () {
+                jsonISR.resetStyle(feature.target);
+            });
+
+        }
+
+        var blueMarker = "#0000ff";
+
+        var redMarker = "#ff0000";
+
+        map.createPane('pan_Isr');
+        map.getPane('pan_Isr').style.zIndex = 401;
+        map.getPane('pan_Isr').style['mix-blend-mode'] = 'normal';
+        var jsonISR = new L.GeoJSON.AJAX(["data/covidISR.geojson"],
+            {
+                onEachFeature: pop_Isr_saver1_1,
+                style: function (feature) {
+                    return {
+                        //TODO: 
+                        "color": "rgb(255,0,0)",
+                        "fillColor": "rgb(255,0,0)",
+                        "weight": 1,
+                        "opacity": 0.65
+                    };
+                }
+                , pane: 'pan_Isr'
+            });
+        jsonISR.addTo(map);
+        jsonISR.on('data:loaded',function(e){
+
+            var element = document.getElementById('filter');
+            element.innerHTML +=  '<p style="color:Blue; font-size: 17px; text-align: right;"><strong> מספר כללי של מבודדים : '+TotalIsolated +'</strong></p>';
+            element.innerHTML +=  '<p style="color:Blue; font-size: 17px; text-align: right;"><strong> מספר רשומות של ערים : '+infoCounter +'</strong></p>';
+
+        });
+        var sidebar = L.control.sidebar({ container: 'sidebar' }).addTo(map);
+
+        var searchbuttonIL = new L.Control.Search(
+            {
+                layer: jsonISR,
+                propertyName: 'Municipality_desc',
+                zoom: 11,
+                markerlocation: true,
+                textPlaceholder: 'חיפוש עבור ישראל...',
+                textErr: 'המיקום לא נמצא',
+                textCancel: "ביטול"
+            });
+
+        searchbuttonIL.on('search:locationfound', function (e) {
+            if (e.layer._popup)
+                e.layer.openPopup();
+        }).on('search:collapsed', function (e) {
+            console.log(e);
+            jsonISR.resetStyle(e);
+        });
+
+
+        var myLink = document.getElementById('mylink');
+
+
+        searchbuttonIL.addTo(map);
+
+
+
+        function zoomToFeature(e) {
+            map.fitBounds(e.target.getBounds());
+        }
+        
+      
+      
+
+    </script>
+</body>
+
+</html>

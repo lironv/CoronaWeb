@@ -1,0 +1,26 @@
+{
+  "name": "webgisminiproject",
+  "version": "1.0.0",
+  "description": "Web GIS mini project made by dan, sagi &amp; benyamin",
+  "main": "index.js",
+  "dependencies": {
+    "firebase": "^7.14.2",
+    "firebase-tools": "^8.2.0",
+    "init": "^0.1.2",
+    "npm": "^6.14.4"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/benjaminyakobi/webGISminiProject.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/benjaminyakobi/webGISminiProject/issues"
+  },
+  "homepage": "https://github.com/benjaminyakobi/webGISminiProject#readme"
+}
