@@ -13,14 +13,6 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/benjaminyakobi/webGISminiProject.git"
-  },
   "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/benjaminyakobi/webGISminiProject/issues"
-  },
-  "homepage": "https://github.com/benjaminyakobi/webGISminiProject#readme"
+  "license": "ISC"
 }
